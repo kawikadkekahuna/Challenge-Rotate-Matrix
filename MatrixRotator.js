@@ -26,18 +26,36 @@ function MatrixRotator(matrix) {
 // [9,0,3,8,7],                                           // [7,3,0,7,3]
 
 MatrixRotator.prototype.rotate = function(direction) {
+  var self = this;
   // do work here
   // must be a valid Direction, see Direction.js
-  var MATRIX_LENGTH = this.matrix.length;
-  var reformedMatrix = [];
-  for (var i = 0; i < MATRIX_LENGTH; i++) {
-    var tmpMatrix = [];
-    for (var j = 0; j < MATRIX_LENGTH; j++) {
-      tmpMatrix.push(this.matrix[j][i]);
-    }
-    reformedMatrix.push(tmpMatrix.reverse());
+  if (direction === Direction.CW) {
+    this.matrix = rotate();
   }
-  // console.log(reformedMatrix);
-  this.matrix = reformedMatrix;
+
+  if (direction === Direction.CCW) {
+    this.matrix = rotate();
+    this.matrix = rotate();
+    this.matrix = rotate();
+  }
+
+  if(direction !== Direction.CW && direction !== Direction.CCW){
+    throw new TypeError('Invalid directions');
+  }
+
+
+  function rotate() {
+    var MATRIX_LENGTH = self.matrix.length;
+    var reformedMatrix = [];
+    for (var i = 0; i < MATRIX_LENGTH; i++) {
+      var tmpMatrix = [];
+      for (var j = 0; j < MATRIX_LENGTH; j++) {
+        tmpMatrix.push(self.matrix[j][i]);
+      }
+      reformedMatrix.push(tmpMatrix.reverse());
+    }
+    return reformedMatrix;
+  }
+
 
 };

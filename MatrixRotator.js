@@ -35,6 +35,7 @@ function MatrixRotator(matrix) {
 MatrixRotator.prototype.rotate = function(direction, layer) {
   var self = this;
   var MATRIX_LENGTH = this.matrix.length - 1;
+
   var LAYER = layer || 0;
 
   function getTopLayer() {
@@ -42,8 +43,6 @@ MatrixRotator.prototype.rotate = function(direction, layer) {
     for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
       arr.push(self.matrix[LAYER][i]);
     }
-    console.log(arr);
-    return arr; // console.log(cwRotate());
   }
 
   function getRightLayer() {
@@ -52,14 +51,13 @@ MatrixRotator.prototype.rotate = function(direction, layer) {
       for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
         arr.push(self.matrix[i][MATRIX_LENGTH]);
       }
-      console.log(arr);
-      return arr;
-    }else{
+      return arr.reverse();
+    } else {
       for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
         arr.push(self.matrix[i][MATRIX_LENGTH - LAYER]);
       }
-      console.log(arr);
-      return arr;
+      // console.log(arr)
+      return arr.reverse();
 
     }
   }
@@ -69,7 +67,6 @@ MatrixRotator.prototype.rotate = function(direction, layer) {
     for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
       arr.push(self.matrix[MATRIX_LENGTH - LAYER][i]);
     }
-    console.log(arr);
     return arr;
   }
 
@@ -78,8 +75,7 @@ MatrixRotator.prototype.rotate = function(direction, layer) {
     for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
       arr.push(self.matrix[i][LAYER]);
     }
-    console.log(arr);
-    return arr;
+    return arr.reverse();
   }
 
 
@@ -88,32 +84,33 @@ MatrixRotator.prototype.rotate = function(direction, layer) {
   var bottomLayer = getBottomLayer();
   var leftLayer = getLeftLayer();
 
-  function cwRotate() {
+  function cwRotateOuter() {
     var rotatedMatrix = self.matrix;
 
 
     function topToRight() {
-      for (var i = 0; i < MATRIX_LENGTH; i++) {
+      for (var i = 0; i <= MATRIX_LENGTH; i++) {
         rotatedMatrix[i][MATRIX_LENGTH] = topLayer[i];
       }
     }
 
     function rightToBottom() {
-      for (var i = 0; i < MATRIX_LENGTH; i++) {
+      for (var i = 0; i <= MATRIX_LENGTH; i++) {
         rotatedMatrix[MATRIX_LENGTH][i] = rightLayer[i];
       }
+
     }
 
     function bottomToLeft() {
-      for (var i = 0; i < MATRIX_LENGTH; i++) {
+      for (var i = 0; i <= MATRIX_LENGTH; i++) {
         rotatedMatrix[i][0] = bottomLayer[i];
       }
 
     }
 
     function leftToTop() {
-      for (var i = 0; i < MATRIX_LENGTH; i++) {
-        rotatedMatrix[0][i] = leftLayer[i];
+      for (var i = 0; i <= MATRIX_LENGTH; i++) {
+        rotatedMatrix[0][i] = leftLayer[i]
       }
     }
 
@@ -121,8 +118,16 @@ MatrixRotator.prototype.rotate = function(direction, layer) {
     rightToBottom();
     bottomToLeft();
     leftToTop();
+    console.log(rotatedMatrix);
     return rotatedMatrix;
   }
-  // console.log(cwRotate());
+
+  function cwRotateInner() {
+    console.log(cwRotateOuter);
+
+  }
+
+  self.matrix = cwRotateOuter();
+  console.log(self.matrix);
 
 };

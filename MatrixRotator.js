@@ -25,19 +25,104 @@ function MatrixRotator(matrix) {
 // [0,6,8,8,3],                                           // [8,8,9,9,9],
 // [9,0,3,8,7],                                           // [7,3,0,7,3]
 
-MatrixRotator.prototype.rotate = function(direction) {
-  // do work here
-  // must be a valid Direction, see Direction.js
-  var MATRIX_LENGTH = this.matrix.length;
-  var reformedMatrix = [];
-  for (var i = 0; i < MATRIX_LENGTH; i++) {
-    var tmpMatrix = [];
-    for (var j = 0; j < MATRIX_LENGTH; j++) {
-      tmpMatrix.push(this.matrix[j][i]);
+
+// [3,7,0,3,7],
+// [9,9,9,8,8],
+// [1,2,6,8,3],
+// [0,5,3,6,0],
+// [8,4,3,0,9]
+
+MatrixRotator.prototype.rotate = function(direction, layer) {
+  var self = this;
+  var MATRIX_LENGTH = this.matrix.length - 1;
+  var LAYER = layer || 0;
+
+  function getTopLayer() {
+    var arr = [];
+    for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
+      arr.push(self.matrix[LAYER][i]);
     }
-    reformedMatrix.push(tmpMatrix.reverse());
+    console.log(arr);
+    return arr; // console.log(cwRotate());
   }
-  // console.log(reformedMatrix);
-  this.matrix = reformedMatrix;
+
+  function getRightLayer() {
+    var arr = [];
+    if (LAYER === 0) {
+      for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
+        arr.push(self.matrix[i][MATRIX_LENGTH]);
+      }
+      console.log(arr);
+      return arr;
+    }else{
+      for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
+        arr.push(self.matrix[i][MATRIX_LENGTH - LAYER]);
+      }
+      console.log(arr);
+      return arr;
+
+    }
+  }
+
+  function getBottomLayer() {
+    var arr = [];
+    for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
+      arr.push(self.matrix[MATRIX_LENGTH - LAYER][i]);
+    }
+    console.log(arr);
+    return arr;
+  }
+
+  function getLeftLayer() {
+    var arr = [];
+    for (var i = LAYER; i <= MATRIX_LENGTH - LAYER; i++) {
+      arr.push(self.matrix[i][LAYER]);
+    }
+    console.log(arr);
+    return arr;
+  }
+
+
+  var topLayer = getTopLayer();
+  var rightLayer = getRightLayer();
+  var bottomLayer = getBottomLayer();
+  var leftLayer = getLeftLayer();
+
+  function cwRotate() {
+    var rotatedMatrix = self.matrix;
+
+
+    function topToRight() {
+      for (var i = 0; i < MATRIX_LENGTH; i++) {
+        rotatedMatrix[i][MATRIX_LENGTH] = topLayer[i];
+      }
+    }
+
+    function rightToBottom() {
+      for (var i = 0; i < MATRIX_LENGTH; i++) {
+        rotatedMatrix[MATRIX_LENGTH][i] = rightLayer[i];
+      }
+    }
+
+    function bottomToLeft() {
+      for (var i = 0; i < MATRIX_LENGTH; i++) {
+        rotatedMatrix[i][0] = bottomLayer[i];
+      }
+
+    }
+
+    function leftToTop() {
+      for (var i = 0; i < MATRIX_LENGTH; i++) {
+        rotatedMatrix[0][i] = leftLayer[i];
+      }
+    }
+
+    topToRight();
+    rightToBottom();
+    bottomToLeft();
+    leftToTop();
+    return rotatedMatrix;
+  }
+  // console.log(cwRotate());
 
 };

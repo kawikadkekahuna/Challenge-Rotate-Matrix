@@ -1,7 +1,7 @@
 /*  MatrixRotator(matrix)
  *
  *  @param matrix                        a multidimensional array containing the matrix
- *  
+ *
  *  @public property matrix              the matrix
  *
  *  @public method rotate(direction)     direction is either
@@ -129,5 +129,13 @@ MatrixRotator.prototype.rotate = function(direction, layer) {
 
   self.matrix = cwRotateOuter();
   console.log(self.matrix);
+
+};
+
+//                    Must be Direction.CW               |-- Must be a valid Number
+//                        or Direction.CCW ---v          v   between 1 and [radius]
+MatrixRotator.prototype.rotateStep = function(direction, layer) {
+  // do work here
+
 
 };

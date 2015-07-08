@@ -6,20 +6,11 @@ var Direction = require("../Direction").Direction;
 
 describe("The Matrix Rotator", function () {
 
-  
-  var matrixRotator;
-  beforeEach(function(){
-    matrixRotator = new MatrixRotator(Matrix.matrix1);
-  });
-  
-
-
   var matrixRotator;
   beforeEach(function(){
     matrixRotator = new MatrixRotator(Matrix.getMatrix1());
   });
 
->>>>>>> devleague_2advanced
   it("can rotate Clockwise", function () {
     matrixRotator.rotate(Direction.CW);
     matrixRotator.matrix.should.be.deep.equal( [
@@ -32,10 +23,7 @@ describe("The Matrix Rotator", function () {
 
   });
 
-
   it.skip("can rotate CounterClockwise", function () {
-  it("can rotate CounterClockwise", function () {
->>>>>>> devleague_2advanced
     matrixRotator.rotate(Direction.CCW);
     matrixRotator.matrix.should.be.deep.equal([
                                             [3,7,0,3,7],
@@ -49,23 +37,13 @@ describe("The Matrix Rotator", function () {
 });
 describe("The Advanced Matrix Rotator", function () {
 
-  
-  var matrixRotator;
-  beforeEach(function(){
-    matrixRotator = new MatrixRotator(Matrix.matrix2);
-  });
-  
-  it.skip("can rotate all layers Clockwise", function () {
-
-
   var matrixRotator;
   beforeEach(function(){
     matrixRotator = new MatrixRotator(Matrix.getMatrix2());
   });
 
 
-  it("can rotate all layers Clockwise", function () {
-
+  it.skip("can rotate all layers Clockwise", function () {
     matrixRotator.rotate(Direction.CW);
     matrixRotator.matrix.should.be.deep.equal( [
                                             [31,25,19,13,7,1],
@@ -75,14 +53,11 @@ describe("The Advanced Matrix Rotator", function () {
                                             [35,29,23,17,11,5],
                                             [36,30,24,18,12,6]
                                           ]);
-
-=======
     matrixRotator = null;
-
 
   });
 
-  it("can rotate layer 1 CounterClockwise", function () {
+  it.skip("can rotate layer 1 CounterClockwise", function () {
     matrixRotator.rotate(Direction.CCW, 1);
     matrixRotator.matrix.should.be.deep.equal([
                                             [1, 2, 3, 4, 5, 6],
@@ -94,11 +69,7 @@ describe("The Advanced Matrix Rotator", function () {
                                           ]);
   });
 
-
   it.skip("can rotate layer 2 Clockwise", function () {
-=======
-  it("can rotate layer 2 Clockwise", function () {
-
 
     matrixRotator.rotate(Direction.CW, 2);
     matrixRotator.matrix.should.be.deep.equal([
@@ -111,11 +82,7 @@ describe("The Advanced Matrix Rotator", function () {
                                           ]);
   });
 
-
   it.skip("can rotate layer 3 Clockwise", function () {
-=======
-  it("can rotate layer 3 Clockwise", function () {
-
     matrixRotator.rotate(Direction.CW, 3);
     matrixRotator.matrix.should.be.deep.equal([
                                             [31,25,19,13,7 ,1 ],
@@ -129,11 +96,7 @@ describe("The Advanced Matrix Rotator", function () {
 
   describe("validates arguments", function () {
 
-
     it.skip("should accept layer ranges 1 - 3", function() {
-
-    it("should accept layer ranges 1 - 3", function() {
-
       (function () {
         matrixRotator.rotate(Direction.CW, 0)
       }).should.throw(RangeError);
@@ -144,11 +107,6 @@ describe("The Advanced Matrix Rotator", function () {
         matrixRotator.rotate(Direction.CW, 3)
       }).should.not.throw(RangeError);
     });
-
-    
-  });
-});
-
 
   });
 });
@@ -161,7 +119,7 @@ describe("The 2Advanced Matrix Rotator", function () {
   });
 
 
-  it("can rotate layer 3 Clockwise", function () {
+  it.skip("can rotate layer 3 Clockwise", function () {
     matrixRotator.rotateStep(Direction.CW, 3);
     matrixRotator.matrix.should.be.deep.equal([
                                               [ 7, 1, 2, 3, 4, 5],
@@ -173,7 +131,7 @@ describe("The 2Advanced Matrix Rotator", function () {
                                             ]);
   });
 
-  it("can rotate layer 2 CounterClockwise", function () {
+  it.skip("can rotate layer 2 CounterClockwise", function () {
     matrixRotator.rotateStep(Direction.CCW, 2);
     matrixRotator.matrix.should.be.deep.equal([
                                               [ 1, 2, 3, 4, 5, 6],
@@ -185,7 +143,7 @@ describe("The 2Advanced Matrix Rotator", function () {
                                             ]);
   });
 
-  it("can rotate layer 1 Clockwise", function () {
+  it.skip("can rotate layer 1 Clockwise", function () {
 
     matrixRotator.rotateStep(Direction.CW, 1);
     matrixRotator.matrix.should.be.deep.equal([
@@ -198,7 +156,7 @@ describe("The 2Advanced Matrix Rotator", function () {
                                             ]);
   });
 
-  it("can rotate and persist previous state", function () {
+  it.skip("can rotate and persist previous state", function () {
     matrixRotator.rotateStep(Direction.CW, 3);
     matrixRotator.rotateStep(Direction.CCW, 2);
     matrixRotator.rotateStep(Direction.CW, 1);
@@ -214,7 +172,7 @@ describe("The 2Advanced Matrix Rotator", function () {
 
   describe("validates arguments", function () {
 
-    it("should accept layer ranges 1 - 3", function() {
+    it.skip("should accept layer ranges 1 - 3", function() {
       (function () {
         matrixRotator.rotateStep(Direction.CW, 0)
       }).should.throw(RangeError);
@@ -225,7 +183,7 @@ describe("The 2Advanced Matrix Rotator", function () {
         matrixRotator.rotateStep(Direction.CW, 3)
       }).should.not.throw(RangeError);
     });
-    it("should only rotate CW or CCW", function() {
+    it.skip("should only rotate CW or CCW", function() {
       (function () {
         matrixRotator.rotateStep('left', 1)
       }).should.throw(Error);
@@ -246,4 +204,3 @@ describe("The 2Advanced Matrix Rotator", function () {
 
   });
 });
-

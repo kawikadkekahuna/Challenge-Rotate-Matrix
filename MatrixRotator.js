@@ -19,11 +19,25 @@ function MatrixRotator(matrix) {
 //                                         |-- Must be Direction.CW
 //                                         v        or Direction.CCW
 MatrixRotator.prototype.rotate = function(direction) {
-  // do work here
 
-  // must be a valid Direction, see Direction.js
+
   var matrixDimensions = this.matrix.length;
   var SCHEMA;
+
+  function loop(matrix) {
+    var d = matchMatrixToSchema(turnCW(assignValues(matrix, 1), 1));
+    // var d = matchMatrixToSchema(turnCW(assignValues(matrix, 1),1));
+    console.log('matrix', matrix);
+    console.log('d', d);
+    var f = matchMatrixToSchema(turnCW(assignValues(d, 2)));
+    console.log('f', f);
+    // var f = matchMatrixToSchema(turnCW(assignValues(d)));
+
+    // console.log(matchMatrixToSchema(turnCW(assignValues(d))));
+    // console.log('f', f);
+  }
+
+  loop(this.matrix);
 
   function assignValues(matrix, layer) {
     var schema = {};
@@ -44,69 +58,67 @@ MatrixRotator.prototype.rotate = function(direction) {
     return newMatrix;
   }
 
-  var matrixMask = assignValues(this.matrix);
-  // console.log('SCHEMA', SCHEMA);
-  // console.log('matrixMask', matrixMask);
 
-  // [9,0,3,4,8],
-  // [0,6,3,5,0],
-  // [3,8,6,2,1],
-  // [8,8,9,9,9],
-  // [7,3,0,7,3]
-
-  function turnCW(matrix,layer) {
+  function turnCW(matrix, layer) {
+    console.log('turnCw started');
+    layer = layer || 0;
     var newMatrix = matrix;
     var FIRST_INDEX = 0;
     var LAST_INDEX = matrixDimensions - 1;
 
-    for (var i = 0; i < matrixDimensions; i++) {
-      for (var j = 0; j < matrixDimensions; j++) {
+    for (var i = 0 + layer; i < matrixDimensions - layer; i++) {
+      for (var j = 0 + layer; j < matrixDimensions - layer; j++) {
 
-        switch(true){
+        switch (true) {
           case i === FIRST_INDEX:
-          if(j === FIRST_INDEX){
-            newMatrix[i][j] += matrixDimensions;
-          }else{
-            newMatrix[i][j] -= 1;
-          }
-          break;
+            if (j === FIRST_INDEX) {
+              newMatrix[i][j] += matrixDimensions;
+            } else {
+              newMatrix[i][j] -= 1;
+            }
+            break;
 
           case i > FIRST_INDEX && i < LAST_INDEX:
-          if(j === FIRST_INDEX){
-            newMatrix[i][j] += matrixDimensions;
-          }
-          if(j === matrixDimensions - 1){
-            newMatrix[i][j] -= matrixDimensions;
-          }
-          break;
+            if (j === FIRST_INDEX) {
+              newMatrix[i][j] += matrixDimensions;
+            }
+            if (j === matrixDimensions - 1) {
+              newMatrix[i][j] -= matrixDimensions;
+            }
+            break;
 
           case i === LAST_INDEX:
-          if(j >= FIRST_INDEX && j < LAST_INDEX){
-            newMatrix[i][j] +=1
-          }
-          if(j === LAST_INDEX){
-          newMatrix[i][j] -= matrixDimensions;
-          }
-
+            if (j >= FIRST_INDEX && j < LAST_INDEX) {
+              newMatrix[i][j] += 1
+            }
+            if (j === LAST_INDEX) {
+              newMatrix[i][j] -= matrixDimensions;
+            }
         }
-        //end j for
+        //end j fo
       }
       //end i for
     }
     return newMatrix;
   }
 
-  var test = turnCW(matrixMask);
-  console.log('test', test);
+  function matchMatrixToSchema(matrix) {
+    var newMatrix = matrix;
+    var counter = 0;
+    var innerCounter = 0;
 
-  function matchMatrixToSchema(matrix){
-    for(var key in SCHEMA){
-       console.log('SCHEMA[key]',SCHEMA[key]); 
-    }
+    newMatrix.forEach(function(current) {
+      for (var i = 0; i < current.length; i++) {
+        var index = current[i];
+        var replace = SCHEMA[index];
+        current[i] = replace;
+      }
+    });
 
+    return newMatrix;
 
   }
-  matchMatrixToSchema(test);
+
 
 };
 

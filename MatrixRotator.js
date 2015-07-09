@@ -25,16 +25,14 @@ MatrixRotator.prototype.rotate = function(direction) {
   var SCHEMA;
 
   function loop(matrix) {
-    var d = matchMatrixToSchema(turnCW(assignValues(matrix, 1), 1));
-    // var d = matchMatrixToSchema(turnCW(assignValues(matrix, 1),1));
-    console.log('matrix', matrix);
-    console.log('d', d);
-    var f = matchMatrixToSchema(turnCW(assignValues(d, 2)));
-    console.log('f', f);
-    // var f = matchMatrixToSchema(turnCW(assignValues(d)));
-
-    // console.log(matchMatrixToSchema(turnCW(assignValues(d))));
-    // console.log('f', f);
+    var testMatrix = assignValues(matrix);
+    console.log('testMatrix', testMatrix);
+    testMatrix = turnCW(testMatrix)
+    console.log('testMatrix', testMatrix);
+    testMatrix = matchMatrixToSchema(testMatrix);
+    console.log('testMatrix', testMatrix);
+    // var d = assignValues(matrix, 1);
+    // var step = turnCW(d, 1);
   }
 
   loop(this.matrix);
@@ -60,15 +58,14 @@ MatrixRotator.prototype.rotate = function(direction) {
 
 
   function turnCW(matrix, layer) {
-    console.log('turnCw started');
     layer = layer || 0;
     var newMatrix = matrix;
-    var FIRST_INDEX = 0;
-    var LAST_INDEX = matrixDimensions - 1;
-
+    var FIRST_INDEX = 0 + layer;
+    console.log('matrix', matrix);
+    console.log('SCHEMA', SCHEMA);
+    var LAST_INDEX = matrixDimensions - 1 - layer;
     for (var i = 0 + layer; i < matrixDimensions - layer; i++) {
       for (var j = 0 + layer; j < matrixDimensions - layer; j++) {
-
         switch (true) {
           case i === FIRST_INDEX:
             if (j === FIRST_INDEX) {
@@ -82,13 +79,14 @@ MatrixRotator.prototype.rotate = function(direction) {
             if (j === FIRST_INDEX) {
               newMatrix[i][j] += matrixDimensions;
             }
-            if (j === matrixDimensions - 1) {
+            if (j === matrixDimensions - 1 - layer) {
               newMatrix[i][j] -= matrixDimensions;
             }
             break;
 
           case i === LAST_INDEX:
             if (j >= FIRST_INDEX && j < LAST_INDEX) {
+
               newMatrix[i][j] += 1
             }
             if (j === LAST_INDEX) {

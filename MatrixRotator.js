@@ -22,18 +22,31 @@ MatrixRotator.prototype.rotate = function(direction) {
 
 
   var SCHEMA;
+  var newMatrix;
+  if (direction === Direction.CW) {
+    var outer = shiftMatrix(this.matrix);
+    for (var i = 0; i < this.matrix.length - 2; i++) {
+      inner = shiftMatrix(inner);
+    }
+    var inner = shiftMatrix(this.matrix, 1);
+     for (var i = 0; i < this.matrix.length - 2; i++) {
+      inner = shiftMatrix(inner);
+    }
 
-  function loop(matrix) {
-    var testMatrix = assignValues(matrix, 1, matrix.length);
-    console.log('testMatrix', testMatrix);
-    testMatrix = turnCW(testMatrix, 1, testMatrix.length);
-    console.log('turnCW', testMatrix);
-    testMatrix = matchMatrixToSchema(testMatrix);
-    console.log('matchMatrix', testMatrix);
+
 
   }
 
-  loop(this.matrix);
+
+
+  function shiftMatrix(matrix, layer) {
+    layer = layer || null;
+    var shiftedMatrix = assignValues(matrix, layer, matrix.length);
+    shiftedMatrix = turnCW(shiftedMatrix, layer, shiftedMatrix.length);
+    shiftedMatrix = matchMatrixToSchema(shiftedMatrix);
+
+    return shiftedMatrix;
+  }
 
   function assignValues(matrix, layer, dimensions) {
     var schema = {};
@@ -52,7 +65,6 @@ MatrixRotator.prototype.rotate = function(direction) {
       newMatrix.push(row);
     }
     SCHEMA = schema;
-    console.log('SCHEMA', SCHEMA);
     return newMatrix;
   }
 
@@ -87,11 +99,9 @@ MatrixRotator.prototype.rotate = function(direction) {
 
           case i === LAST_INDEX:
             if (j >= FIRST_INDEX && j < LAST_INDEX) {
-              console.log('j', j);
               newMatrix[i][j] += 1
             }
             if (j === LAST_INDEX) {
-              console.log('in');
               newMatrix[i][j] -= matrixDimensions;
             }
         }
@@ -166,6 +176,7 @@ MatrixRotator.prototype.rotate = function(direction) {
     return newMatrix;
 
   }
+
 
 
 };

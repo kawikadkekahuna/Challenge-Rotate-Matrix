@@ -26,10 +26,10 @@ MatrixRotator.prototype.rotate = function(direction) {
   if (direction === Direction.CW) {
     var outer = shiftMatrix(this.matrix);
     for (var i = 0; i < this.matrix.length - 2; i++) {
-      inner = shiftMatrix(inner);
+      outer = shiftMatrix(inner);
     }
     var inner = shiftMatrix(this.matrix, 1);
-     for (var i = 0; i < this.matrix.length - 2; i++) {
+    for (var i = 0; i < this.matrix.length - 2; i++) {
       inner = shiftMatrix(inner);
     }
 
@@ -41,15 +41,17 @@ MatrixRotator.prototype.rotate = function(direction) {
 
   function shiftMatrix(matrix, layer) {
     layer = layer || null;
-    var shiftedMatrix = assignValues(matrix, layer, matrix.length);
-    shiftedMatrix = turnCW(shiftedMatrix, layer, shiftedMatrix.length);
-    shiftedMatrix = matchMatrixToSchema(shiftedMatrix);
+     console.log('matrix',matrix); 
+    // var shiftedMatrix = assignValues(matrix, layer, matrix[0].length);
+    // shiftedMatrix = turnCW(shiftedMatrix, layer, shiftedMatrix.length);
+    // shiftedMatrix = matchMatrixToSchema(shiftedMatrix);
 
-    return shiftedMatrix;
+    // return shiftedMatrix;
   }
 
   function assignValues(matrix, layer, dimensions) {
     var schema = {};
+     console.log('dimensions',dimensions); 
     var matrixDimensions = dimensions;
     var counter = 1;
     var newMatrix = [];
